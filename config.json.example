@@ -1,0 +1,7 @@
+{
+  "serverHost": "0.0.0.0",
+  "serverPort": 443,
+
+  "sslKey": "cert.key",
+  "sslCert": "cert.pem"
+}
