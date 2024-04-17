@@ -8,6 +8,7 @@
 #include "json/json.h"
 #include "fstream"
 #include "exception"
+#include <iostream>
 
 class jsonReader {
 public:
@@ -16,6 +17,7 @@ public:
 
 public:
     jsonReader(const char* filename);
+    jsonReader(const std::string* str);
 };
 
 

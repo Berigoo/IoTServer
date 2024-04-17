@@ -8,6 +8,12 @@
 #define CPPHTTPLIB_OPENSSL_SUPPORT
 #include "httplib.h"
 #include "functional"
+#include "../utils/databaseHolder.h"
+#include "boost/uuid/uuid.hpp"
+#include "boost/uuid/uuid_io.hpp"
+#include "boost/uuid/uuid_generators.hpp"
+#include "../models/device.h"
+#include "spdlog/spdlog.h"
 
 class deviceRoutes {
 public:

@@ -5,11 +5,10 @@
 #include "utils/jsonWriter.h"
 #include "routes/deviceRoutes.h"
 
+jsonReader config("../config.json");
+ssl server(config.value.get("sslCert", "cert.pem").asCString(), config.value.get("sslKey", "cert.key").asCString());
+
 int main(){
-    jsonReader config("../config.json");
-
-    ssl server(config.value.get("sslCert", "cert.pem").asCString(), config.value.get("sslKey", "cert.key").asCString());
-
     Json::Value data;
     data["Hello"] = "World";
     data["world"] = 2;
