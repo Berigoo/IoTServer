@@ -20,6 +20,7 @@ public:
     static std::string dbName;
 
     static sql::ResultSet *execPreparedQuery(string statement, vector<string> values);
+    static bool checkUserCredentials(std::string username, std::string passwd);
 };
 
 

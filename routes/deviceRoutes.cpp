@@ -19,10 +19,29 @@ deviceRoutes::deviceRoutes(httplib::SSLServer& server) {
 
 
 void deviceRoutes::listDevices(const httplib::Request &req, httplib::Response &res) {
+    res.set_header("msg", "hellow");
     res.set_content("Hello World!", "text/plain");
 }
 
 void deviceRoutes::removeDevices(const httplib::Request &req, httplib::Response &res) {
+    jsonReader data(&req.body);
+    if(!(data.value.isMember("usernm") && data.value.isMember("passwd") && data.value.isMember("device_uuid"))){
+        res.status = 422;
+        return;
+    }else{
+        if(DBdevice::checkUserCredentials(data.value.get("usernm", " ").asString(), data.value.get("passwd", " ").asString())){
+            try{
+                // remove device entry if user valid
+                DBdevice::execPreparedQuery("DELETE FROM devices WHERE uuid=?", {data.value.get("device_uuid", " ").asString()});
+                res.status = 200;
+                return;
+            }catch (sql::SQLException& e){
+                std::cout << "Failed to delete device entry, " << e.what() << '\n';
+                res.status = 500;
+                return;
+            }
+        }
+    }
 }
 
 // usernm, passwd, device_type, device_name, owner
@@ -39,6 +58,7 @@ void deviceRoutes::addDevices(const httplib::Request &req, httplib::Response &re
             if (resQuery->next()) {
                 int count = resQuery->getInt(1);
                 if (count > 0) {
+                    // generate uuid if user valid
                     boost::uuids::uuid uuid = boost::uuids::random_generator()();
                     device dev(boost::uuids::to_string(uuid), data.value.get("device_name", " ").asString(),
                                static_cast<deviceType>(data.value.get("device_type", -1).asInt()),
@@ -48,6 +68,7 @@ void deviceRoutes::addDevices(const httplib::Request &req, httplib::Response &re
                         dev.setUuid(boost::uuids::to_string(uuid));
                     }
                     std::cout << "Adding device \n";
+                    res.set_header("uuid", boost::uuids::to_string(uuid));
                 } else {
                     std::cout << "Users not found \n";
                 }
