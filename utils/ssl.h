@@ -11,6 +11,8 @@
 class ssl : public httplib::SSLServer {
 public:
     ssl(const char* sslCert, const char* sslKey);
+
+    void run(std::string host, int port);
 };
 
 

@@ -2,16 +2,16 @@
 // Created by pach on 4/16/24.
 //
 
-#ifndef IOTSERVER_DBDEVICE_H
-#define IOTSERVER_DBDEVICE_H
+#ifndef IOTSERVER_DB_H
+#define IOTSERVER_DB_H
 
 #include "../utils/databaseHolder.h"
 #include "../utils/jsonReader.h"
 
-class DBdevice : public databaseHolder{
+class DB : public databaseHolder{
 public:
     static sql::Connection* connection;
-    DBdevice();
+    DB();
 
     static std::string host;
     static int port;
@@ -21,7 +21,8 @@ public:
 
     static sql::ResultSet *execPreparedQuery(string statement, vector<string> values);
     static bool checkUserCredentials(std::string username, std::string passwd);
+    static sql::ResultSet* getRightUUID(string leftUUID);
 };
 
 
-#endif //IOTSERVER_DBDEVICE_H
+#endif //IOTSERVER_DB_H

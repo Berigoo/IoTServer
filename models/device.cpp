@@ -30,10 +30,10 @@ device device::getDeviceById(int id) {
 bool device::addDevice(const device &dev) {
     try {
             // check if uuid available
-        sql::ResultSet* res = DBdevice::execPreparedQuery("SELECT * FROM devices WHERE uuid=?", {dev.uuid});
+        sql::ResultSet* res = DB::execPreparedQuery("SELECT * FROM devices WHERE uuid=?", {dev.uuid});
         if(!res->next()) {
-            DBdevice::execPreparedQuery("INSERT INTO devices VALUES(?, ?, ?, ?)",
-                                        {dev.uuid, dev.name, to_string(dev.type),
+            DB::execPreparedQuery("INSERT INTO devices VALUES(?, ?, ?, ?)",
+                                  {dev.uuid, dev.name, to_string(dev.type),
                                          to_string(dev.owner)});
             return true;
         }else {
@@ -54,4 +54,21 @@ std::vector<device> device::getAllDevice() {
 
 void device::setUuid(std::string uuid) {
     this->uuid = uuid;
+}
+
+bool device::isUuidExist(std::string uuid) {
+    try{
+        sql::ResultSet* res = DB::execPreparedQuery("SELECT COUNT(1) FROM devices WHERE uuid=?", {uuid});
+        if(res->next()){
+            int count = res->getInt(1);
+            if(count > 0){
+                return true;
+            } else{
+                return false;
+            }
+        }else return false;
+    }catch (sql::SQLException& e){
+        std::cout << "Failed to validate device uuid, " << e.what() << '\n';
+        return false;
+    }
 }

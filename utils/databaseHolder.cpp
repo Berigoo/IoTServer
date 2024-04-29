@@ -4,9 +4,6 @@
 
 #include "databaseHolder.h"
 
-//TODO fix this things
-// make model-like databse (just like laravel no)
-
 sql::ResultSet *databaseHolder::execPreparedQuery(string statement, vector<string> values, sql::Connection* connection) {
     shared_ptr<sql::PreparedStatement> stmt(connection->prepareStatement(statement));
     try {

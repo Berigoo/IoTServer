@@ -12,6 +12,7 @@
 #include "boost/uuid/uuid.hpp"
 #include "boost/uuid/uuid_io.hpp"
 #include "boost/uuid/uuid_generators.hpp"
+#include "openssl/sha.h"
 #include "../models/device.h"
 #include "spdlog/spdlog.h"
 
@@ -23,6 +24,8 @@ private:
     void listDevices(const httplib::Request& req, httplib::Response& res);
     void addDevices(const httplib::Request& req, httplib::Response& res);
     void removeDevices(const httplib::Request& req, httplib::Response& res);
+    void upgradeProtocol(const httplib::Request& req, httplib::Response& res);
+    void connectDevices(const httplib::Request& req, httplib::Response& res);
 };
 
 

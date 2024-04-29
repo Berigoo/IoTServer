@@ -11,7 +11,7 @@ link_directories("/usr/local/lib/mariadb")
 add_library(mariadbcpp STATIC IMPORTED)
 set_property(TARGET mariadbcpp PROPERTY IMPORTED_LOCATION "/usr/local/lib/mariadb/libmariadbcpp.so")
 
-add_executable(IoTServer main.cpp utils/ssl.cpp utils/ssl.h utils/jsonReader.cpp utils/jsonReader.h utils/jsonWriter.cpp utils/jsonWriter.h routes/dataRoutes.cpp routes/dataRoutes.h routes/deviceRoutes.cpp routes/deviceRoutes.h models/device.h models/device.cpp utils/databaseHolder.cpp utils/databaseHolder.h models/DBdevice.cpp models/DBdevice.h)
+add_executable(IoTServer main.cpp utils/ssl.cpp utils/ssl.h utils/jsonReader.cpp utils/jsonReader.h utils/jsonWriter.cpp utils/jsonWriter.h routes/dataRoutes.cpp routes/dataRoutes.h routes/deviceRoutes.cpp routes/deviceRoutes.h models/device.h models/device.cpp utils/databaseHolder.cpp utils/databaseHolder.h models/DB.cpp models/DB.h models/data.cpp models/data.h config.h utils/websocket.cpp utils/websocket.h routes/wsEndpoint1.cpp routes/wsEndpoint1.h)
 
 target_link_libraries(IoTServer jsoncpp_lib ${OPENSSL_LIBRARIES} mariadbcpp)
 

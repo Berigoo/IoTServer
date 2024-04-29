@@ -10,7 +10,7 @@
 #include "jsonReader.h"
 
 
-class DBdevice;
+class DB;
 
 using namespace std;
 

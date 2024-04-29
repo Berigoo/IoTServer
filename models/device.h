@@ -8,10 +8,11 @@
 #include "string"
 #include "vector"
 #include "../utils/databaseHolder.h"
-#include "../models/DBdevice.h"
+#include "../models/DB.h"
 
 enum deviceType{
     UNDEFINED,
+    DIGITAL_1_INPUT,
     DIGITAL_1_OUTPUT
 };
 
@@ -30,6 +31,8 @@ public:
     static bool addDevice(const device& dev);
     static void removeDeviceById(int id);
     static std::vector<device> getAllDevice();
+
+    static bool isUuidExist(std::string uuid);
 
 private:
     std::string uuid;
